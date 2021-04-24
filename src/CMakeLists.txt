@@ -34,8 +34,8 @@ target_link_libraries (statsdcc
   ${CMAKE_DL_LIBS}
 )
 
-add_executable (proxy proxy.cc)
-target_link_libraries (proxy
+add_executable (statsdcc_proxy proxy.cc)
+target_link_libraries (statsdcc_proxy
   proxy_http_server
   tcp_server
   udp_server
