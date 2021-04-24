@@ -30,7 +30,7 @@ namespace proxy {
 
 int HttpServer::main_pid;
 
-int HttpServer::handle_request(void *cls,
+MHD_Result HttpServer::handle_request(void *cls,
                                struct MHD_Connection *connection,
                                const char *url,
                                const char *method,
@@ -39,7 +39,7 @@ int HttpServer::handle_request(void *cls,
                                size_t *upload_data_size,
                                void **con_cls) {
   struct MHD_Response *response = NULL;
-  int ret;
+  MHD_Result ret;
 
   if (!std::strcmp(url, "/")) {
     char home[] = "<html> <h3>Welcome to statsdcc</h3>\
@@ -208,9 +208,9 @@ Json::Value HttpServer::get_app_status() {
 
   // workers app stats
   root["worker"]["metrics_dropped"] =
-    static_cast<unsigned long long int>(::worker->metrics_dropped);
+   Json::UInt64(::worker->metrics_dropped.load());
   root["worker"]["bad_lines_seen"] =
-    static_cast<unsigned long long int>(::worker->bad_lines_seen);
+    Json::UInt64(::worker->bad_lines_seen.load());
 
   return root;
 }

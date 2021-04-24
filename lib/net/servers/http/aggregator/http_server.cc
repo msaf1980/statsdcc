@@ -26,7 +26,7 @@ namespace aggregator {
 
 int HttpServer::main_pid;
 
-int HttpServer::handle_request(void *cls,
+MHD_Result HttpServer::handle_request(void *cls,
                                struct MHD_Connection *connection,
                                const char *url,
                                const char *method,
@@ -35,7 +35,7 @@ int HttpServer::handle_request(void *cls,
                                size_t *upload_data_size,
                                void **con_cls) {
   struct MHD_Response *response = NULL;
-  int ret;
+  MHD_Result ret;
 
   if (!std::strcmp(url, "/")) {
     char home[] = "<html> <h3>Welcome to statsdcc</h3>\
@@ -243,7 +243,7 @@ Json::Value HttpServer::get_app_status() {
     for (auto itr = sorted_freq.cbegin();
          itr != sorted_freq.cend();
          ++itr) {
-      root[std::to_string(id)]["hot_metrics"][itr->first] = itr->second;
+      root[std::to_string(id)]["hot_metrics"][itr->first] = Json::UInt64(itr->second);
       if (++i == 5) break;
     }
 

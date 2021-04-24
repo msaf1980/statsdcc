@@ -54,7 +54,7 @@ class HttpServer {
   }
 
  private:
-  static int handle_request(void *cls,
+  static MHD_Result handle_request(void *cls,
                             struct MHD_Connection *connection,
                             const char *url,
                             const char *method,
