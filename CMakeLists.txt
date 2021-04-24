@@ -21,7 +21,7 @@ endif()
 
 
 configure_file (include/statsdcc/version.h.in
-                include/statsdcc/version.h)
+                ${CMAKE_BINARY_DIR}/include/statsdcc/version.h)
 
 # set compiler flags
 check_cxx_compiler_flag ('-std=c++11' COMPILER_SUPPORTS_CXX11)
@@ -52,7 +52,7 @@ endif()
 
 include_directories (
    include
-   build/include
+   ${CMAKE_BINARY_DIR}/include
    vendor/gtest-1.7.0/include
 )
 
